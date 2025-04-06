@@ -8,17 +8,17 @@ from .schemas import ProductCreate, product_update, product_update_partial
 
 
 async def get_products(session: AsyncSession) -> list[Product]:
-    start = Select(Product).order_by(Product.id)
-    result: Result = await session.execute(start)
+    stmt = Select(Product).order_by(Product.id)
+    result: Result = await session.execute(stmt)
     products = result.scalars().all()
     return list(products)
 
 
 async def get_product(
     session: AsyncSession,
-    product_Id: int,
+    product_id: int,
 ) -> Product | None:
-    return await session.get(Product, product_Id)
+    return await session.get(Product, product_id)
 
 
 async def create_product(
@@ -28,7 +28,6 @@ async def create_product(
     product = Product(**product_in.model_dump())
     session.add(product)
     await session.commit()
-    # await session.refresh()
     return product
 
 
