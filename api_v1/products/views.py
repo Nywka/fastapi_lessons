@@ -28,7 +28,7 @@ async def create_product(
     return await crud.create_product(session, product_in=product_in)
 
 
-@router.get("{product_id}", response_model=Product)
+@router.get("/{product_id}", response_model=Product)
 async def get_product(
     product: Product = Depends(product_by_id),
 ):
